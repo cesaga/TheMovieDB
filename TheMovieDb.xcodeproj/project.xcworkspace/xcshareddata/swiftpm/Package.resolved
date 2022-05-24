@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "0c8cb78d05b6d067ee331c05058ff4dedcb45ffa",
+        "version" : "5.0.0"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "59eb199fdb8dd47733624e8b0277822d0232579e",
+        "version" : "7.2.2"
+      }
+    },
+    {
+      "identity" : "youtube-ios-player-helper-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/s4cha/youtube-ios-player-helper-swift.git",
+      "state" : {
+        "revision" : "dfd50f46d29ebd2a72fe70ed7d434ad12548594a",
+        "version" : "1.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}
