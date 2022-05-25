@@ -43,6 +43,7 @@ class ActorDetailViewController: UIViewController {
         collectionView.delegate = self
         registerCell()
         fetchActorDetailAndActorMovies()
+        navigationItem.title = "Actor Detail"
     }
     
     private func registerCell() {
@@ -51,8 +52,6 @@ class ActorDetailViewController: UIViewController {
     }
     
     private func setupView() {
-        navigationItem.title = "Actor Detail"
-       
         actorImage.kfSetImage(for: actor.profileUrl)
         actorImage.layer.cornerRadius = 8
         actorName.text = actor.name
@@ -80,8 +79,7 @@ extension ActorDetailViewController: UICollectionViewDataSource, UICollectionVie
             return UICollectionViewCell()
         }
         let movie = moviesForActor[indexPath.row]
-        cell.movieImage.kfSetImage(for: movie.posterUrl)
-        cell.movieTitle.text = movie.title
+        cell.configureCell(movieTitle: movie.title ?? "", movieImageUrl: movie.posterUrl)
         return cell
     }
     

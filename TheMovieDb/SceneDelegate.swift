@@ -17,43 +17,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = setupTabBar()
+        window.rootViewController = setupRootViewController()
         window.makeKeyAndVisible()
         self.window = window
     }
     
-    func setupTabBar() -> UIViewController {
-        
-        let tabBarController = UITabBarController()
-        tabBarController.tabBar.tintColor = .darkGray
-        tabBarController.tabBar.barTintColor = .systemGray6
-        
-        let movieListViewModel = MovieListViewModel(repository: MovieRepository(), storage: FavoritesManager.shared)
+    func setupRootViewController() -> UIViewController {
+    
+        let movieListViewModel = MovieListViewModel(repository: MovieRepository())
         let movieListViewController = MovieListViewController(movieListViewModel: movieListViewModel)
         movieListViewModel.view = movieListViewController
-        
-        let favoritesViewModel = FavoritesViewModel(favoritesRepository: FavoritesRepository(storage: FavoritesManager.shared), storage: FavoritesManager.shared)
-        let favoritesViewController = FavoritesViewController(favoritesViewModel: favoritesViewModel)
-        favoritesViewModel.view = favoritesViewController
-        
-        let moviesNavigationController = setupNavigationController(viewController: movieListViewController,
-                                                                      title: "Movies", image: UIImage(systemName: "house")!,
-                                                                      selectedImage: UIImage(systemName: "house.fill")!)
-      
-        let favoritesNavigationController = setupNavigationController(viewController: favoritesViewController,
-                                                                   title: "Favorites", image: UIImage(systemName: "star")!,
-                                                                      selectedImage: (UIImage(systemName: "star.fill")!.withRenderingMode(.alwaysOriginal)))
-        
-        tabBarController.viewControllers = [moviesNavigationController, favoritesNavigationController]
-        return tabBarController
-    }
-    
-    func setupNavigationController(viewController: UIViewController, title: String, image: UIImage, selectedImage: UIImage) -> UIViewController {
-        
-        let navigationController = UINavigationController(rootViewController: viewController)
-        viewController.navigationItem.title = title
-        navigationController.tabBarItem = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
-      
+        let navigationController = UINavigationController(rootViewController: movieListViewController)
+     
         return navigationController
     }
     

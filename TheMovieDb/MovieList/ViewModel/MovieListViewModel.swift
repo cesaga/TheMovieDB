@@ -12,12 +12,10 @@ final class MovieListViewModel {
     
     weak var view: MovieListViewProtocol?
     private let repository: MovieRepositoryProtocol
-    private let storage: MovieStorage
     private var page: Int = 1
     
-    init(repository: MovieRepositoryProtocol, storage: MovieStorage) {
+    init(repository: MovieRepositoryProtocol) {
         self.repository = repository
-        self.storage = storage
     }
     
     func fetchMovies(nextPage: Bool = false) {
@@ -32,14 +30,5 @@ final class MovieListViewModel {
             }
         }
         view?.stopLoading()
-    }
-    
-    func starButtonTapped(movie: MovieModel) {
-        let isMovieSaved = storage.contains(movie: movie)
-        if isMovieSaved {
-            storage.remove(movie: movie)
-        } else {
-            storage.save(movie: movie)
-        }
     }
 }

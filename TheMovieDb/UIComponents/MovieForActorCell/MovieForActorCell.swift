@@ -18,6 +18,11 @@ class MovieForActorCell: UICollectionViewCell {
         setupView()
     }
     
+    func configureCell(movieTitle: String, movieImageUrl: URL) {
+        self.movieTitle.text = movieTitle
+        movieImage.kfSetImage(for: movieImageUrl)
+    }
+    
     private func setupView() {
         contentView.layer.cornerRadius = 10
         contentView.layer.borderWidth = 0.5

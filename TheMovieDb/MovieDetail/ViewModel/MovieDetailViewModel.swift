@@ -27,7 +27,6 @@ final class MovieDetailViewModel {
             }
         }
     }
-    
 
     func fetchCredits(moviId: Int) {
         Task {

@@ -30,4 +30,21 @@ struct MovieModel: Codable {
         let joinedGenres = result.joined(separator: ", ")
         return joinedGenres
     }
+    
+    var prettyRuntime: String {
+        let minutesToHour = minutesToHoursAndMinutes(runtime ?? 0)
+        if runtime == 0 {
+            return ""
+        }
+        else if minutesToHour.movieHours == 0 {
+            return "\(minutesToHour.movieMinutes)m"
+        }
+        else {
+            return "\(minutesToHour.movieHours)h \(minutesToHour.movieMinutes)m"
+        }
+    }
+    
+    private func minutesToHoursAndMinutes(_ minutes : Int) -> (movieHours : Int , movieMinutes : Int) {
+        return (minutes / 60, (minutes % 60))
+    }
 }

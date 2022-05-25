@@ -19,6 +19,12 @@ class ActorCollectionViewCell: UICollectionViewCell {
         setupView()
     }
     
+    func configureCell(actorName: String, actorCharacter: String, actorImageUrl: URL) {
+        self.actorName.text = actorName
+        self.actorCharacter.text = actorCharacter
+        actorImage.kfSetImage(for: actorImageUrl)
+    }
+
     private func setupView() {
         contentView.layer.cornerRadius = 10
         contentView.layer.borderWidth = 0.5

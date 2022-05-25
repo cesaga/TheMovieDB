@@ -27,7 +27,6 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var tagline: UILabel!
     @IBOutlet weak var movieOverview: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var youtubeView: YTPlayerView!
     
     let movieDetailViewModel: MovieDetailViewModel
@@ -54,80 +53,27 @@ class MovieDetailViewController: UIViewController {
         navigationItem.title = "Movie Detail"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        setupFavoriteButton()
-    }
-    
     private func registerCell() {
-        
         let nib = UINib(nibName: "ActorCollectionViewCell", bundle: nil)
         self.collectionView.register(nib, forCellWithReuseIdentifier: "ActorCollectionViewCell")
     }
     
     private func configureView() {
-        
         movieImage.kfSetImage(for: movie.posterUrl)
         movieTitle.text = movie.title
         releaseDate.text = movie.release_date
-        runtime.text = setupRuntimeLabel()
+        runtime.text = movie.prettyRuntime
+        movieGenre.text = movie.prettyGenres
         tagline.text = movie.tagline
         movieOverview.text = movie.overview
     }
     
     private func fetchMovieDetailAndCredits() {
-        
         if let movieId = movie.id {
             movieDetailViewModel.fetchMovieDetail(movieId: movieId)
             movieDetailViewModel.fetchCredits(moviId: movieId)
             movieDetailViewModel.fetchMovieTrailer(movieId: movieId)
         }
-    }
-    
-    private func minutesToHoursAndMinutes(_ minutes : Int) -> (movieHours : Int , movieMinutes : Int) {
-        return (minutes / 60, (minutes % 60))
-    }
-    
-    private func setupRuntimeLabel() -> String {
-        let minutesToHour = minutesToHoursAndMinutes(movie.runtime ?? 0)
-        if movie.runtime == 0 {
-            return ""
-        }
-        else if minutesToHour.movieHours == 0 {
-            return "\(minutesToHour.movieMinutes)m"
-        }
-        else {
-            return "\(minutesToHour.movieHours)h \(minutesToHour.movieMinutes)m"
-        }
-    }
-    
-    @IBAction func saveFavoriteButton(_ sender: UIButton) {
-        sender.bounce()
-        
-        let isFavorite = !favoriteButton.isSelected
-        paintFavoriteButton(isFavorite)
-        
-//        if let index = FavoritesManager.shared.favorites.firstIndex(where: {$0.id == movie.id}) {
-//            FavoritesManager.shared.favorites.remove(at: index)
-//        } else {
-//            FavoritesManager.shared.favorites.insert(movie, at: 0)
-//        }
-//        FavoritesManager.shared.save()
-    }
-    
-    private func paintFavoriteButton(_ isFavorite: Bool) {
-        self.favoriteButton.isSelected = isFavorite
-    }
-    
-    private func setupFavoriteButton() {
-        
-        self.favoriteButton.setImage(UIImage(systemName: "star.fill")?.applyingSymbolConfiguration(.init(scale: .large))?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
-        
-        self.favoriteButton.setImage(UIImage(systemName: "star.fill")?.applyingSymbolConfiguration(.init(scale: .large))?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal), for: .selected)
-        
-        FavoritesManager.shared.favorites.contains(where: {$0.id == movie.id}) ? paintFavoriteButton(true) :
-            paintFavoriteButton(false)
     }
 }
 
@@ -138,14 +84,10 @@ extension MovieDetailViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCollectionViewCell", for: indexPath) as? ActorCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCollectionViewCell", for: indexPath) as? ActorCollectionViewCell else { return UICollectionViewCell() }
+          
         let actor = actors[indexPath.row]
-        cell.actorImage.kfSetImage(for: actor.profileUrl)
-        cell.actorName.text = actor.name
-        cell.actorCharacter.text = actor.character
-      
+        cell.configureCell(actorName: actor.name ?? "", actorCharacter: actor.character ?? "", actorImageUrl: actor.profileUrl)
         return cell
     }
     
@@ -174,7 +116,6 @@ extension MovieDetailViewController: MovieDetailViewProtocol {
     
     func showMovieDetail(movie: MovieModel) {
         self.movie = movie
-        self.movieGenre.text = movie.prettyGenres
         configureView()
     }
     

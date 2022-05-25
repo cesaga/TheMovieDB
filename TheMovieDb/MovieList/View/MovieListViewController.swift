@@ -38,6 +38,7 @@ class MovieListViewController: UIViewController {
         tableView.delegate = self
         registerCells()
         movieListViewModel.fetchMovies()
+        navigationItem.title = "Movies"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +53,7 @@ class MovieListViewController: UIViewController {
     }
 }
     
-extension MovieListViewController: UITableViewDataSource, UITableViewDelegate, MovieTableVieCellDelegate {
+extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
@@ -62,10 +63,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate, M
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MovieTableViewCell else { return UITableViewCell() }
         
         let movie = movies[indexPath.row]
-        cell.delegate = self
-        cell.movieTitle.text = movie.title
-        cell.movieImage.kfSetImage(for: movie.posterUrl)
-        FavoritesManager.shared.favorites.contains(where: {$0.id == movie.id}) ? cell.paintFavoriteButton(isFavorite: true) :  cell.paintFavoriteButton(isFavorite: false)
+        cell.configureCell(movieTitle: movie.title ?? "", posterUrl: movie.posterUrl)
         return cell
     }
     
@@ -87,12 +85,6 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate, M
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         CGFloat(145)
-    }
-    
-    func favoriteButtonTapped(at cell: MovieTableViewCell) {
-        guard let indexPath = self.tableView.indexPath(for: cell) else { return }
-        let movie = movies[indexPath.row]
-        movieListViewModel.starButtonTapped(movie: movie)
     }
 }
 
