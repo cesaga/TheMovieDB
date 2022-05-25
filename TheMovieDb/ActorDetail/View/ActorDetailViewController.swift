@@ -75,21 +75,16 @@ extension ActorDetailViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieForActorCell", for: indexPath) as? MovieForActorCell else {
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieForActorCell", for: indexPath) as? MovieForActorCell else { return UICollectionViewCell() }
+        
         let movie = moviesForActor[indexPath.row]
         cell.configureCell(movieTitle: movie.title ?? "", movieImageUrl: movie.posterUrl)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let movie = moviesForActor[indexPath.row]
-        let movieDetailViewModel = MovieDetailViewModel(movieDetailRepository: MovieDetailRepository(),
-                                                        creditsRepository: CreditsRepository())
-        let movieDetailViewController = MovieDetailViewController(movie: movie, movieDetailViewModel: movieDetailViewModel)
-        movieDetailViewModel.view = movieDetailViewController
+        let movieDetailViewController = SceneFactory.makeMovieDetailViewController(movie: movie)
         navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
     

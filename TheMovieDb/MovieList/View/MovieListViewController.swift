@@ -18,6 +18,7 @@ protocol MovieListViewProtocol: AnyObject {
 class MovieListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let movieListViewModel: MovieListViewModel
     var movies: [MovieModel] = []
@@ -70,10 +71,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let movie = movies[indexPath.row]
-        let movieDetailViewModel = MovieDetailViewModel(movieDetailRepository: MovieDetailRepository(),
-                                                        creditsRepository: CreditsRepository())
-        let movieDetailViewController = MovieDetailViewController(movie: movie, movieDetailViewModel: movieDetailViewModel)
-        movieDetailViewModel.view = movieDetailViewController
+        let movieDetailViewController = SceneFactory.makeMovieDetailViewController(movie: movie)
         navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
     
@@ -91,11 +89,11 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
 extension MovieListViewController: MovieListViewProtocol {
 
     func showLoading() {
-        print("Loading")
+        activityIndicator.startAnimating()
     }
     
     func stopLoading() {
-        print("Stop Loading")
+        activityIndicator.stopAnimating()
     }
     
     func showMovies(movies: [MovieModel]) {

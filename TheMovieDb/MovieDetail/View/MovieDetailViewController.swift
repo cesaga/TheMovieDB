@@ -10,8 +10,6 @@ import UIKit
 import YoutubePlayer
 
 protocol MovieDetailViewProtocol: AnyObject {
-    func showLoading()
-    func stopLoading()
     func showMovieDetail(movie: MovieModel)
     func showActors(actors:[ActorModel])
     func showMovieTrailer(trailer: Video)
@@ -93,10 +91,8 @@ extension MovieDetailViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let actor = actors[indexPath.row]
-        let actorDetailViewModel = ActorDetailViewModel(actorDetailRepository: ActorDetailRepository(), moviesForActorRepository: MoviesForActorRepository())
-        let actorDetailViewController = ActorDetailViewController(actor: actor, actorDetailViewModel: actorDetailViewModel)
-        actorDetailViewModel.view = actorDetailViewController
-        navigationController?.pushViewController(actorDetailViewController, animated: true)
+        let actorDetail = SceneFactory.makeActorDetailViewController(actor: actor)
+        navigationController?.pushViewController(actorDetail, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -105,15 +101,6 @@ extension MovieDetailViewController: UICollectionViewDataSource, UICollectionVie
 }
 
 extension MovieDetailViewController: MovieDetailViewProtocol {
-    
-    func showLoading() {
-        print("Loading")
-    }
-    
-    func stopLoading() {
-        print("Stop Loading")
-    }
-    
     func showMovieDetail(movie: MovieModel) {
         self.movie = movie
         configureView()

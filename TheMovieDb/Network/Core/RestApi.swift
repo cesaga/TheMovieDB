@@ -38,7 +38,7 @@ class RestApi {
     }
     
     private func getDefaultQueryParams() -> [String: String] {
-        return Constants.apiKey
+        return ["api_key": Constants.apiKey]
     }
     
     private func makeURL(url: String, queryParams: [String: String]) -> String {

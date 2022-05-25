@@ -28,7 +28,7 @@ final class MovieListViewModel {
             } catch {
                 view?.showMovies(movies: [])
             }
+            view?.stopLoading()
         }
-        view?.stopLoading()
     }
 }

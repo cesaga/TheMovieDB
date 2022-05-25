@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieListViewController" customModule="TheMovieDb" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="N7a-qP-Ngd" id="UV9-x8-Ydi"/>
                 <outlet property="tableView" destination="vzT-VN-znh" id="sW1-oc-MW9"/>
                 <outlet property="view" destination="iN0-l3-epB" id="7aS-w8-4Wf"/>
             </connections>
@@ -22,13 +23,18 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="N7a-qP-Ngd">
+                    <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="N7a-qP-Ngd" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8hd-9c-iQC"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vzT-VN-znh" secondAttribute="bottom" id="9eI-nv-bZb"/>
                 <constraint firstItem="vzT-VN-znh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="LMu-uU-xPP"/>
                 <constraint firstItem="vzT-VN-znh" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="leQ-ZS-bvp"/>
+                <constraint firstItem="N7a-qP-Ngd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mGI-F8-KhE"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vzT-VN-znh" secondAttribute="trailing" id="rAp-7S-P9E"/>
             </constraints>
             <point key="canvasLocation" x="139" y="96"/>
