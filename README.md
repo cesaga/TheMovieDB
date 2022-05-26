@@ -3,7 +3,7 @@ Example MovieApp Using TMDB API.
 
 
 ## Features
-|Feature| description |
+|Feature| Description |
 |--|--|
 |Movie List| Fetch and show popular movies |
 |Movie Detail| Show movie release date, genres, runtime, overview, movie trailer and actors  |
