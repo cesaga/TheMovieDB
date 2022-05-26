@@ -24,9 +24,10 @@ final class MovieListViewModel {
         Task {
             do {
                 let movies = try await repository.fetchMovies(page: page)
+                view?.renderEmptyView(render: false)
                 view?.showMovies(movies: movies.results)
             } catch {
-                view?.showMovies(movies: [])
+                view?.renderEmptyView(render: true)
             }
             view?.stopLoading()
         }

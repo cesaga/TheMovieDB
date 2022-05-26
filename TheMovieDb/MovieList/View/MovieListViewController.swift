@@ -12,6 +12,7 @@ import Kingfisher
 protocol MovieListViewProtocol: AnyObject {
     func showLoading()
     func stopLoading()
+    func renderEmptyView(render: Bool)
     func showMovies(movies: [MovieModel])
 }
 
@@ -44,13 +45,23 @@ class MovieListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         tableView.reloadData()
     }
     
     private func registerCells() {
         let nib = UINib(nibName: "MovieTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MovieCell")
+    }
+    
+    private func showEmptyView() {
+        let image = UIImage(named: "emptyView")
+        let imageView = UIImageView(image: image)
+        tableView.backgroundView = imageView
+        tableView.backgroundView?.contentMode = .center
+    }
+    
+    private func hideEmptyView() {
+        tableView.backgroundView = nil
     }
 }
     
@@ -87,6 +98,10 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension MovieListViewController: MovieListViewProtocol {
+    func renderEmptyView(render: Bool) {
+        
+        render ? showEmptyView() : hideEmptyView()
+    }
 
     func showLoading() {
         activityIndicator.startAnimating()
