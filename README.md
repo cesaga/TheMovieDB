@@ -3,21 +3,21 @@ Example MovieApp Using TMDB API.
 
 
 ## Features
-|Feature| description |
+|Feature| Description |
 |--|--|
-|MovieList|  |
-|MovieDetail|  |
-|Actor Details|  |
-|Preview trailers|  |
-|Poster|  |
+|Movie List| Fetch and show popular movies |
+|Movie Detail| Show movie release date, genres, runtime, overview, movie trailer and actors  |
+|Actor Details| Show actor name, birthday, place of birth , biography and movies  |
+|Movie Trailers| Show and play the oficial trailer of the movie |
+|Poster| Show the official poster of the movie |
 
 
 |Used| 🎯 |
 |--|--|
-|Kinfisher| 🖼 |
 |MVVM| 🏛 |
 |UIKit| 🗾 |
 |Alamofire| 🕸 |
+|Kinfisher| 🖼 |
 
 
 ## Preview 
